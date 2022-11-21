@@ -1,9 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const expenseRouter = require("./routes/expenses-router");
+const listsRouter = require("./routes/lists-routes")
+
 const app = express();
 
 app.use(bodyParser.json());
+
+
+app.use("/expense", expenseRouter);
+app.use("/lists", listsRouter);
+
 
 app.use("/healtcheck", (req, res, next) => {
   res.status(200);
