@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const readFilePromise = (entity) => {
   return new Promise((resolve, reject) => {
-    fs.readFile(`./data/${entity}.json`, "utf8", (err, data) => {
+    fs.readFile(`./data/${entity}.json`, "utf-8", (err, data) => {
       if (err) {
         reject(err);
         return;

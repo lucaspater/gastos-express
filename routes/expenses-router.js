@@ -1,13 +1,13 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 
-const fileMethods = require("../files-functions/files-methods");
+const filesMethods = require("../files-functions/files-methods");
 
 const expenseRouter = express.Router();
 
 expenseRouter.get("/:id", async (req, res) => {
   const id = req.params.id;
-  const expensesList = await fileMethods.readFilePromise("expensess");
+  const expensesList = await filesMethods.readFilePromise("expenses");
 
   expensesList.forEach((expense) => {
     if (id === expense.id) {
@@ -25,9 +25,9 @@ expenseRouter.post("/", async (req, res) => {
     import: req.body.import,
   };
 
-  const expensesList = await fileMethods.readFilePromise("expenses");
+  const expensesList = await filesMethods.readFilePromise("expenses");
   expensesList.push(expense);
-  await fileMethods.writeFilePromise("expenses", expensesList);
+  await filesMethods.writeFilePromise("expenses", expensesList);
 
   res.send(expense)
 });
