@@ -29,45 +29,43 @@ expenseRouter.post("/", async (req, res) => {
   expensesList.push(expense);
   await filesMethods.writeFilePromise("expenses", expensesList);
 
-  res.send(expense)
+  res.send(expense);
 });
 
 expenseRouter.put("/:id", async (req, res) => {
-    const editId = req.params.id;
-    const expenseUpdateData = {
-      id: editId,
-      title: req.body.title,
-      description: req.body.description,
-      import: req.body.import,
-    };
-    const expensesList = await filesMethods.readFilePromise("todos");
+  const editId = req.params.id;
+  const expenseUpdateData = {
+    id: editId,
+    title: req.body.title,
+    description: req.body.description,
+    import: req.body.import,
+  };
+  const expensesList = await filesMethods.readFilePromise("expenses");
 
-    for (let i = 0; i < expensesList.length; i++) {
-      if (expensesList[i].id === editId) {
-        expensesList[i] = expenseUpdateData;
-      }
+  for (let i = 0; i < expensesList.length; i++) {
+    if (expensesList[i].id === editId) {
+      expensesList[i] = expenseUpdateData;
     }
-    await filesMethods.writeFilePromise("todos", expensesList);
-    res.send(expenseUpdateData);
-  });
+  }
+  await filesMethods.writeFilePromise("expenses", expensesList);
+  res.send(expenseUpdateData);
+});
 
-  expenseRouter.delete("/:id", async (req, res) => {
-    const id = req.params.id;
-    const expensesList = await filesMethods.readFilePromise("expense");
-    for (let i = 0; i < expensesList.length; i++) {
-      if (id === expensesList[i].id) {
-        expensesList.splice(i, 1);
-      }
+expenseRouter.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  const expensesList = await filesMethods.readFilePromise("expense");
+  for (let i = 0; i < expensesList.length; i++) {
+    if (id === expensesList[i].id) {
+      expensesList.splice(i, 1);
     }
-    await filesMethods.writeFilePromise("expense", expensesList);
-    res.status(204).send();
-  });
+  }
+  await filesMethods.writeFilePromise("expense", expensesList);
+  res.status(204).send();
+});
 
-
-  expenseRouter.get("/", async (req, res) => {
-    const expensesList = await filesMethods.readFilePromise("expense");
-    res.send(expensesList);
-  });
-
+expenseRouter.get("/", async (req, res) => {
+  const expensesList = await filesMethods.readFilePromise("expense");
+  res.send(expensesList);
+});
 
 module.exports = expenseRouter;
