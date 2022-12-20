@@ -12,7 +12,7 @@ app.use("/expense", expenseRouter);
 app.use("/lists", listsRouter);
 app.use("/healtcheck", (req, res, next) => {
   res.status(200);
-  res.send("OK");
+  res.send("OK OK");
 });
 
 const PORT = process.env.PORT || 3000;
